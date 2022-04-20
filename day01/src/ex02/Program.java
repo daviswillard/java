@@ -1,4 +1,4 @@
-package ex02.src;
+package ex02;
 
 public class Program {
 

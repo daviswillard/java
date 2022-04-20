@@ -1,4 +1,4 @@
-package ex03.src;
+package ex03;
 
 import java.util.UUID;
 

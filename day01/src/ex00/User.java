@@ -1,25 +1,25 @@
-package ex02.src;
+package ex00;
 
 public class User {
     private String  name;
     private Integer id;
     private Integer balance;
 
-    public User(String name, int balance) {
+    User(String name, int id, int balance) {
         this.balance = balance;
-        this.name = name;
-        this.id = UserIdsGenerator.getInstance().getUserId();
+		this.name = name;
+        this.id = id;
         checkBalance();
     }
 
-    private void	checkBalance() {
-        if (balance < 0) {
-            System.err.println("User " + name + " has negative balance"
+	private void	checkBalance() {
+		if (balance < 0) {
+			System.err.println("User " + name + " has negative balance"
                     + " (id: " + id + ')');
             System.err.println("Defaulting balance to zero...");
-            balance = 0;
+		    balance = 0;
         }
-    }
+	}
 
     public int  getBalance() {
         return balance;

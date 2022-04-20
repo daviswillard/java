@@ -1,4 +1,4 @@
-package ex02.src;
+package ex01;
 
 public class UserIdsGenerator {
     private static UserIdsGenerator instance;

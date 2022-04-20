@@ -1,4 +1,4 @@
-package ex03.src;
+package ex03;
 
 public class User {
     private String                  name;
