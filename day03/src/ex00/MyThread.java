@@ -12,13 +12,8 @@ public class MyThread extends Thread {
 	}
 
 	public void	run() {
-		try {
-			for (int i = 0; i < count; i++) {
-				System.out.println(name);
-				sleep(1);
-			}
-		} catch (InterruptedException exc) {
-			System.err.println("Thread " + name + " has been interrupted");
+		for (int i = 0; i < count; i++) {
+			System.out.println(name);
 		}
 	}
 }

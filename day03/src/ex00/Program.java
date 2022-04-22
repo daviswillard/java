@@ -14,7 +14,7 @@ public class Program {
 	}
 
 	public static void main(String[] args) {
-		if (args.length != 1) {
+		if (args.length != 1 || !args[0].startsWith("--count=")) {
 			return ;
 		}
 		int count = parseArg(args[0]);

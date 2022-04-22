@@ -16,7 +16,7 @@ public class Program {
 	}
 
 	public static void main(String[] args) {
-		if (args == null || args.length > 1) {
+		if (args.length != 1 || !args[0].startsWith("--count=")) {
 			return ;
 		}
 		Semaphore mutexS = new Semaphore(1);
