@@ -14,7 +14,7 @@ public class Program {
 	}
 
 	public static void main(String[] args) {
-		if (args == null || args.length > 1) {
+		if (args.length != 1) {
 			return ;
 		}
 		int count = parseArg(args[0]);

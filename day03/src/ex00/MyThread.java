@@ -1,7 +1,5 @@
 package ex00;
 
-import java.io.IOException;
-
 public class MyThread extends Thread {
 
 	private final int	count;

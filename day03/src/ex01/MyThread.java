@@ -1,8 +1,6 @@
 package ex01;
 
-import javax.crypto.SealedObject;
 import java.util.concurrent.Semaphore;
-import java.util.function.IntToDoubleFunction;
 
 public class MyThread extends Thread {
 	private final Semaphore		mutexS;
