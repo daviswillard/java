@@ -6,7 +6,6 @@ public class MyThread extends Thread {
 	private final String name;
 
 	MyThread(String name, int count) {
-		super(name);
 		this.count = count;
 		this.name = name;
 	}

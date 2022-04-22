@@ -39,6 +39,9 @@ public class Program {
         }
         arraySize = parseArg(args[0]);
         threadsCount = parseArg(args[1]);
+        if (arraySize > 2000000) {
+            arraySize = 2000000;
+        }
         if (threadsCount > arraySize) {
             threadsCount = arraySize;
         }
