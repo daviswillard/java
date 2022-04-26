@@ -4,7 +4,7 @@
    http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <modelVersion>4.0.0</modelVersion>
 <groupId>edu.school21</groupId>
-<artifactId>chat</artifactId>
+<artifactId>chat01</artifactId>
 <version>1.0</version>
 <dependencies>
     <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
@@ -12,6 +12,18 @@
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
         <version>42.3.4</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
+    <dependency>
+        <groupId>com.zaxxer</groupId>
+        <artifactId>HikariCP</artifactId>
+        <version>3.3.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.36</version>
     </dependency>
 </dependencies>
 <build>
