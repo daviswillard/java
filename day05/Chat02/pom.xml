@@ -4,7 +4,7 @@
    http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <modelVersion>4.0.0</modelVersion>
 <groupId>edu.school21</groupId>
-<artifactId>chat01</artifactId>
+<artifactId>chat02</artifactId>
 <version>1.0</version>
 <dependencies>
     <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
