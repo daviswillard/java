@@ -1,15 +1,25 @@
-package school21.spring.service.models;
+package edu.school21.spring.service.models;
 
 import java.util.Objects;
 
 public class User {
 
-    private final Long      id;
-    private final String    email;
+    private Long      id;
+    private String    email;
+
+    public User() {}
 
     public User(Long id, String email) {
         this.email = email;
         this.id = id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getEmail() {

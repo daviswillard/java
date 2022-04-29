@@ -1,4 +1,4 @@
-package school21.spring.service.repositories;
+package edu.school21.spring.service.repositories;
 
 import java.util.List;
 
@@ -8,5 +8,4 @@ public interface CrudRepository<T> {
     void    save(T entity);
     void    update(T entity);
     void    delete(Long id);
-
 }
