@@ -93,7 +93,7 @@ public class Program
             for (int j = 0; j < 10; j++) {
                 printHistogram(sharps[j], array[j], i);
             }
-            System.out.println("");
+            System.out.println();
         }
         for (int i = 0; i < 10; i++) {
             if (array[i][0] == 0) {
@@ -101,7 +101,7 @@ public class Program
             }
             System.out.printf("%3c", array[i][1]);
         }
-        System.out.println("");
+        System.out.println();
     }
 
 	public static void main(String[] args) {
