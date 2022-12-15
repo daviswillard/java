@@ -1,13 +1,13 @@
 package ex05;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 class Program {
 
     static final String[] days = {"TU", "WE", "TH", "FR", "SA", "SU", "MO"};
     static int[] studentsByte;
-    static int[] attendanceList;
+    static int[][][] attendanceList = new int[2][30][5];
+    static int currentStudent = 0;
 
 
     public static void main(String[] args) {
@@ -15,11 +15,57 @@ class Program {
         String[] students = getNameArray(console);
         int[][] lessons = getLessonsArray(console);
         fillAttendanceList(students, console);
-
+        printAttendanceList(students, lessons);
         console.close();
-        Arrays.stream(students).forEach(System.out::println);
-        System.out.println(Arrays.deepToString(lessons));
-        Arrays.stream(studentsByte).forEach(System.out::println);
+    }
+
+    private static void printAttendanceList(String[] students, int[][] lessons) {
+        for (int i = 0; i < students.length + 1; i++) {
+            if (i == 0) {
+                printFirstLine(lessons);
+                System.out.println();
+                continue;
+            }
+            System.out.printf("%10s", students[i - 1]);
+            currentStudent = studentsByte[i - 1];
+            printAttendance(lessons);
+            System.out.println();
+        }
+    }
+
+    private static void printAttendance(int[][] lessons) {
+        for (int j = 0; j < 30; j++) {
+            for (int k = 0; k < 5; k++) {
+                if (lessons[j % 7][k] == 1) {
+                    if ((attendanceList[0][j][k] & currentStudent) != 0 ||
+                            (attendanceList[1][j][k] & currentStudent) != 0) {
+                        int a = 0;
+                        if ((attendanceList[0][j][k] & currentStudent) != 0) {
+                            a = 1;
+                        } else if ((attendanceList[1][j][k] & currentStudent) != 0){
+                            a = -1;
+                        }
+                        System.out.printf("%10d|", a);
+                    } else if ((attendanceList[0][j][k] & currentStudent) == 0 &&
+                            (attendanceList[1][j][k] & currentStudent) == 0) {
+                        System.out.printf("%11s", "|");
+                    }
+                }
+            }
+        }
+    }
+
+    private static void printFirstLine(int[][] lessons) {
+        System.out.printf("%10s", "");
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 7; j++) {
+                for (int k = 0; k < 5; k++) {
+                    if (lessons[j][k] == 1 && (j + 1) + 7 * i <= 30) {
+                        System.out.printf("%1d:00%3s%3d|", k + 1, days[j], (j + 1) + 7 * i);
+                    }
+                }
+            }
+        }
     }
 
     private static boolean isWithWhiteSpace(String probe) {
@@ -33,6 +79,10 @@ class Program {
     }
 
     private static boolean isWrongEntry(String entry) {
+        if (entry.length() == 0) {
+            System.err.println("Entry is empty!");
+            return true;
+        }
         char[] arr = entry.toCharArray();
         int i = 1;
 
@@ -70,14 +120,18 @@ class Program {
             i++;
         }
 
+        int resHour;
         if (i < entry.length() && probe[i] >= '1' && probe[i] <= '5') {
+            resHour = probe[i] - 49;
             i++;
         } else {
             return true;
         }
         i++;
+        int resDay = 0;
         for (int j = 0; i < entry.length() && probe[i] >= '0' && probe[i] <= '9'; ++j, ++i) {
-            if ((j == 0 && (probe[i] == '0' || probe[i] > '3')) || j == 3) {
+            resDay = resDay * 10 + (probe[i] - 48);
+            if (resDay > 30) {
                 return true;
             }
         }
@@ -93,6 +147,11 @@ class Program {
                     return true;
                 }
             }
+            if ((attendanceList[1][resDay - 1][resHour] & currentStudent) != 0) {
+                System.err.println("Student is present and not present simultaneously!");
+                System.exit(0);
+            }
+            attendanceList[0][resDay - 1][resHour] |= currentStudent;
         } else if (entry.length() - i == "NOT_HERE".length()) {
             char[] not_here = "NOT_HERE".toCharArray();
             for (int j = 0; i + j < entry.length(); ++j) {
@@ -100,6 +159,11 @@ class Program {
                     return true;
                 }
             }
+            if ((attendanceList[0][resDay - 1][resHour] & currentStudent) != 0) {
+                System.err.println("Student is present and not present simultaneously!");
+                System.exit(0);
+            }
+            attendanceList[1][resDay - 1][resHour] |= currentStudent;
         } else {
             return true;
         }
@@ -119,12 +183,9 @@ class Program {
     }
 
     private static boolean isWrongAttendanceEntry(String entry, String[] students) {
-        if (isWrongAttendanceFormat(entry)) {
-            System.err.println("Wrong entry format!");
-            return true;
-        }
         for (int i = 0; i < students.length; ++i) {
             if (isStudent(students[i].toCharArray(), entry.toCharArray())) {
+                currentStudent = studentsByte[i];
                 break;
             }
             if (i + 1 == students.length) {
@@ -132,36 +193,11 @@ class Program {
                 return true;
             }
         }
+        if (isWrongAttendanceFormat(entry)) {
+            System.err.println("Wrong entry format!");
+            return true;
+        }
         return false;
-    }
-
-    private static void markDate(String[] students, char[] entry) {
-        int student = 0;
-        int studentIndex = 0;
-
-        for (int i = 0; i < students.length;) {
-            int j = i;
-            char[] temp = students[i].toCharArray();
-
-            for (int k = 0; k < temp.length; k++) {
-                if (temp[k] != entry[k]) {
-                    i++;
-                    break;
-                }
-            }
-            if (j == i) {
-                student = studentsByte[i];
-                studentIndex = students[i].length() + 1;
-                i++;
-            }
-        }
-        // получил имя студента, которого отмечают и индекс времени, на которое нанзачено занятие
-        // дальше осталось: придумать метод хранения таблицы посещения занятий и вывести результат на экран
-        if (student == 0 || studentIndex == 0) {
-            System.err.println("wtf");
-            System.exit(0);
-        }
-
     }
 
     private static void fillAttendanceList(String[] students, Scanner console) {
@@ -175,10 +211,8 @@ class Program {
             if (isWrongAttendanceEntry(temp, students)) {
                 System.exit(0);
             }
-            markDate(students, temp.toCharArray());
         }
     }
-
 
     private static int[][] fillLessons(String[] tokenArray) {
 
@@ -188,7 +222,7 @@ class Program {
                 break;
             }
             char [] buf = token.toCharArray();
-            int res = (int) buf[0] - 48;
+            int res = (int) buf[0] - 49;
             if (buf[2] == 'T' && buf[3] == 'U') {
                 if (result[0][res] == 1) {
                     System.err.println("Time and date already vacated!");
