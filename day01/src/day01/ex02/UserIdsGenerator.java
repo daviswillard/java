@@ -13,7 +13,7 @@ public class UserIdsGenerator {
 
     private Integer userId = 0;
 
-    public Integer getUserId() {
+    public Integer generateId() {
         return this.userId++;
     }
 }

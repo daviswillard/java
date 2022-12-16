@@ -1,14 +1,19 @@
-package day01.ex02;
+package day01.ex03.models;
+
+import day01.ex03.UserIdsGenerator;
+import day01.ex03.transactionlist.TransactionLinkedList;
 
 public class User {
-    private String  name;
-    private Integer id;
+    private final String  name;
+    private final Integer id;
+
+    private final TransactionLinkedList transactions = new TransactionLinkedList();
     private Integer balance;
 
     public User(String name, int balance) {
         this.balance = balance;
         this.name = name;
-        this.id = UserIdsGenerator.getInstance().getUserId();
+        this.id = UserIdsGenerator.getInstance().generateId();
         checkBalance();
     }
 
@@ -19,6 +24,10 @@ public class User {
             System.err.println("Defaulting balance to zero...");
             balance = 0;
         }
+    }
+
+    public TransactionLinkedList getTransactions() {
+        return transactions;
     }
 
     public int  getBalance() {
@@ -35,5 +44,12 @@ public class User {
 
     public void setBalance(int balance) {
         this.balance = balance;
+    }
+
+    @Override
+    public String toString() {
+        return "User: " + getName() +
+                "\nID: " + getId() + "\nBalance: " +
+                getBalance() + '\n';
     }
 }

@@ -1,4 +1,6 @@
-package day01.ex02;
+package day01.ex02.userslist;
+
+import day01.ex02.models.User;
 
 public interface UsersList {
     void    addUser(User client);

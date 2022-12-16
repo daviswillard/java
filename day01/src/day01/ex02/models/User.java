@@ -1,17 +1,17 @@
-package day01.ex03;
+package day01.ex02.models;
+
+import day01.ex02.UserIdsGenerator;
 
 public class User {
-    private String                  name;
-    private Integer                 id;
-    private Integer                 balance;
-    public TransactionLinkedList    transList;
+    private final String  name;
+    private final Integer id;
+    private Integer balance;
 
     public User(String name, int balance) {
         this.balance = balance;
         this.name = name;
-        this.id = UserIdsGenerator.getInstance().getUserId();
+        this.id = UserIdsGenerator.getInstance().generateId();
         checkBalance();
-        transList = new TransactionLinkedList();
     }
 
     private void	checkBalance() {
@@ -23,11 +23,11 @@ public class User {
         }
     }
 
-    public int      getBalance() {
+    public int  getBalance() {
         return balance;
     }
 
-    public int      getId() {
+    public int  getId() {
         return id;
     }
 
@@ -35,7 +35,14 @@ public class User {
         return name;
     }
 
-    public void     setBalance(int balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
+    }
+
+    @Override
+    public String toString() {
+        return "User: " + getName() +
+                "\nID: " + getId() + "\nBalance: " +
+                getBalance() + '\n';
     }
 }

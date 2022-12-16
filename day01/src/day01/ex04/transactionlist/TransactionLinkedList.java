@@ -1,4 +1,6 @@
-package day01.ex03;
+package day01.ex04.transactionlist;
+
+import day01.ex04.models.Transaction;
 
 import java.util.UUID;
 
@@ -14,18 +16,19 @@ class ListNode {
     }
 }
 
-public class TransactionLinkedList implements TransactionList {
-    static class TransactionNotFoundException extends RuntimeException {
-        public TransactionNotFoundException() {
-            super("No such transaction");
-        }
+class TransactionNotFoundException extends RuntimeException {
+    public TransactionNotFoundException() {
+        super("No such transaction");
     }
+}
 
-    static class TransactionListEmptyException extends RuntimeException {
-        public TransactionListEmptyException() {
-            super("Transaction list is empty");
-        }
+class TransactionListEmptyException extends RuntimeException {
+    public TransactionListEmptyException() {
+        super("Transaction list is empty");
     }
+}
+
+public class TransactionLinkedList implements TransactionList {
 
     private ListNode    start;
     private ListNode    end;
@@ -69,16 +72,15 @@ public class TransactionLinkedList implements TransactionList {
         ListNode prev;
         ListNode next;
 
+
+        if (start == null) {
+            throw new TransactionListEmptyException();
+        }
         if (start.value.getId() == id) {
             start = start.next;
             len--;
             return ;
         }
-        if (start == null) {
-            throw new TransactionListEmptyException();
-        }
-
-
         for (int i = 0; i < len; i++) {
             if (temp.value.getId() == id) {
                 break ;
@@ -88,8 +90,6 @@ public class TransactionLinkedList implements TransactionList {
         if (temp == null) {
             throw new TransactionNotFoundException();
         }
-
-
         prev = temp.prev;
         next = temp.next;
         if (prev != null) {
@@ -104,7 +104,7 @@ public class TransactionLinkedList implements TransactionList {
     }
 
     @Override
-    public Transaction[]    getArray() {
+    public Transaction[] toArray() {
         Transaction[] transArr = new Transaction[len];
         ListNode temp = start;
 
@@ -114,4 +114,6 @@ public class TransactionLinkedList implements TransactionList {
         }
         return (transArr);
     }
+
+
 }

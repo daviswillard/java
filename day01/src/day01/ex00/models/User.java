@@ -1,11 +1,11 @@
-package day01.ex00;
+package day01.ex00.models;
 
 public class User {
-    private String  name;
-    private Integer id;
+    private final String  name;
+    private final Integer id;
     private Integer balance;
 
-    User(String name, int id, int balance) {
+    public User(String name, int id, int balance) {
         this.balance = balance;
 		this.name = name;
         this.id = id;
@@ -35,5 +35,10 @@ public class User {
 
     public void setBalance(int balance) {
         this.balance = balance;
+    }
+
+    @Override
+    public String toString() {
+        return "User: " + getName() + "\nID: " + getId() + "\nBalance: " + getBalance() + '\n';
     }
 }

@@ -1,5 +1,7 @@
 package day01.ex01;
 
+import day01.ex01.models.User;
+
 public class Program {
 
     public static void main(String[] args) {
@@ -8,9 +10,9 @@ public class Program {
         User shamil = new User("Shamil",  2500);
         User emil = new User("Emil", -200);
 
-        System.out.println(kamil.getId() + "\n" + kamil.getName());
-        System.out.println(ramil.getId() + "\n" + ramil.getName());
-        System.out.println(shamil.getId() + "\n" + shamil.getName());
-        System.out.println(emil.getId() + "\n" + emil.getName());
+        System.out.println(kamil);
+        System.out.println(ramil);
+        System.out.println(shamil);
+        System.out.println(emil);
     }
 }

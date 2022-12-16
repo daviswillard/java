@@ -1,4 +1,4 @@
-package day01.ex00;
+package day01.ex03.models;
 
 import java.util.UUID;
 
@@ -8,11 +8,11 @@ enum TransCat {
 }
 
 public class Transaction {
-    private UUID        id;
-    private User        personA;
-    private User        personB;
-    private TransCat    category;
-    private Integer     amount;
+    private final UUID id;
+    private final User personA;
+    private final User personB;
+    private final TransCat category;
+    private final Integer amount;
 
     private TransCat    checkAmount(int amount) {
         if (amount > 0) {
@@ -21,7 +21,7 @@ public class Transaction {
         return TransCat.OUTCOME;
     }
 
-    Transaction(User clientA, User clientB, int amount) {
+    public Transaction(User clientA, User clientB, int amount) {
         personA = clientA;
         personB = clientB;
         id = UUID.randomUUID();
@@ -42,4 +42,8 @@ public class Transaction {
         return amount;
     }
 
+    @Override
+    public String toString() {
+        return "Transaction id: " + getId() + "\nAmount: " + getAmount() + "\nCategory: " + getCategory() + '\n';
+    }
 }

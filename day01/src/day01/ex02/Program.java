@@ -1,13 +1,17 @@
 package day01.ex02;
 
+import day01.ex02.models.User;
+import day01.ex02.userslist.UsersArrayList;
+
 public class Program {
 
     public static void main(String[] args) {
+
         UsersArrayList list = new UsersArrayList();
         User kamil = new User("Kamil", 4000);
         User ramil = new User("Ramil", 5000);
         User shamil = new User("Shamil",  2500);
-        User emil = new User("Emil", -200);
+        User emil = new User("Emil", 200);
 
         list.addUser(kamil);
         list.addUser(ramil);
@@ -23,6 +27,11 @@ public class Program {
         System.out.println("-------------");
         for (int i = 0; i < list.getUserCount() - 1; i++) {
             System.out.println(list.getUserIndex(i).getName());
+        }
+        try {
+            list.getUser(50);
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
         }
     }
 }
