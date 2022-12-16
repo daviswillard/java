@@ -11,7 +11,7 @@ cp -R ./src/resources ./target/
 #       Arg2 is black color symbol
 #       Arg3 is the absolute path to .bmp image
 #   Like that:
-#   java -classpath ./target edu.school21.printer.app.Program "Arg1" "Arg2" "Arg3"
+#   java -classpath ./target app.ex00.edu.school21.printer.Program "Arg1" "Arg2" "Arg3"
 
 #   Create .jar archive
 jar cfm ./target/images-to-chars-printer.jar ./src/manifest.txt -C ./target .

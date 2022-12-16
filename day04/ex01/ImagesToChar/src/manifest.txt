@@ -1,1 +1,1 @@
-Main-Class: edu.school21.printer.app.Program
+Main-Class: app.ex00.edu.school21.printer.Program

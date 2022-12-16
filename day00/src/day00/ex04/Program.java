@@ -80,8 +80,10 @@ public class Program
             System.out.printf("%3d", array_element[0]);
         } else if (sum > 10 && sum < 21 && sharp != 0) {
             System.out.printf("%3c", '#');
-        } else if (sharp == 0) {
+        } else if (sharp == 0 && iter == 10) {
             System.out.printf("%3c", array_element[1]);
+        } else {
+            System.out.print("   ");
         }
     }
 

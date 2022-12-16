@@ -1,4 +1,4 @@
-package edu.school21.printer.logic;
+package ex00.edu.school21.printer.logic;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
