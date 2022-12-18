@@ -2,17 +2,12 @@ package day01.ex04.models;
 
 import java.util.UUID;
 
-enum TransCat {
-    INCOME,
-    OUTCOME
-}
-
 public class Transaction {
     private final UUID id;
-    private User personA;
-    private User personB;
+    private final User personA;
+    private final User personB;
     private TransCat category;
-    private Integer amount;
+    private final Integer amount;
 
     private TransCat    checkAmount(int amount) {
         if (amount > 0) {
@@ -29,19 +24,17 @@ public class Transaction {
         category = checkAmount(amount);
     }
 
-    public void swapClients() {
-        User temp = personA;
-        personA = personB;
-        personB = temp;
-    }
-
-    public void swapCategory() {
-        if (category == TransCat.INCOME) {
+    public Transaction(Transaction twin) {
+        personA = twin.personB;
+        personB = twin.personA;
+        id = twin.getId();
+        amount = twin.getAmount() * -1;
+        category = twin.getCategory();
+        if (twin.getCategory() == TransCat.INCOME) {
             category = TransCat.OUTCOME;
         } else {
             category = TransCat.INCOME;
         }
-        amount *= -1;
     }
 
     public TransCat getCategory() {
@@ -58,6 +51,21 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "Transaction id: " + getId() + "\nAmount: " + getAmount() + "\nCategory: " + getCategory() + '\n';
+        return "Transaction id: " + getId() + "\nAmount: " +
+                getAmount() + "\nCategory: " + getCategory() +
+                "\nClient A: " + personA +
+                "\nClient B: " + personB + '\n';
+    }
+
+    public static void main(String[] args) {
+        User userA = new User("Iskander", 500);
+        User userB = new User("Kamil", 200);
+
+        Transaction transaction = new Transaction(userA, userB, 200);
+        userA.getTransactions().addTransaction(transaction);
+        Transaction transCopy = new Transaction(transaction);
+        userB.getTransactions().addTransaction(transCopy);
+        System.out.println(userB.getTransactions().toArray()[0]);
+        System.out.println(userA.getTransactions().toArray()[0]);
     }
 }
