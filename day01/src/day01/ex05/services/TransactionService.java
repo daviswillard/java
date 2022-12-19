@@ -1,9 +1,6 @@
 package day01.ex05.services;
 
-import day01.ex05.models.ListNode;
-import day01.ex05.models.TransCat;
-import day01.ex05.models.Transaction;
-import day01.ex05.models.User;
+import day01.ex05.models.*;
 import day01.ex05.transactionlist.TransactionLinkedList;
 import day01.ex05.userslist.UsersArrayList;
 import day01.ex05.userslist.UsersList;
@@ -14,6 +11,9 @@ public class TransactionService {
 
     private static class TransactionHelper {
         public static boolean hasAPair(Transaction test, TransactionLinkedList list) {
+            if (list.getLen() == 0) {
+                return false;
+            }
             ListNode node = list.getStart();
             while (node != null) {
                 if (test.getId().equals(node.getValue().getId())) {
@@ -35,23 +35,19 @@ public class TransactionService {
         usersList.addUser(client);
     }
 
-    public Integer getUserBalance(User client) {
-        if (client == null || client.getId() == null) {
-            System.err.println("You passed nonexistent client argument!");
-            System.exit(0);
-        }
-        return usersList.getUser(client.getId()).getBalance();
-    }
-
-    public Integer getUserBalance(Integer clientID) {
+    public String getUserBalance(Integer clientID) throws UserNotFoundException {
         if (clientID == null) {
             System.err.println("You passed nonexistent client argument!");
-            System.exit(0);
+            throw new UserNotFoundException();
         }
-        return usersList.getUser(clientID).getBalance();
+        User temp = usersList.getUser(clientID);
+        return String.format("%s - %d", temp.getName(), temp.getBalance());
     }
 
-    public void makeTransaction(User first, User second, Integer value) {
+    public void makeTransaction(Integer firstArg, Integer secondArg, Integer value) {
+        User first = usersList.getUser(firstArg);
+        User second = usersList.getUser(secondArg);
+
         Transaction transaction = new Transaction(first, second, value);
         Transaction transReverse = new Transaction(transaction);
         if ((
@@ -60,12 +56,15 @@ public class TransactionService {
         ) || (
                 transReverse.getCategory() == TransCat.OUTCOME
                         && transReverse.getAmount() * -1 > second.getBalance()
-        )) {
+        ) || first.equals(second)
+        ) {
 
-            throw new IllegalTransactionExceptions();
+            throw new IllegalTransactionException();
         }
         first.getTransactions().addTransaction(transaction);
         second.getTransactions().addTransaction(transReverse);
+        first.setBalance(transaction.getAmount());
+        second.setBalance(transReverse.getAmount());
     }
 
     public Transaction[] getTransactions(Integer id) {
@@ -81,13 +80,17 @@ public class TransactionService {
         boolean flag;
 
         for (int i = 0; i < usersList.getUserCount(); ++i) {
-            ListNode listNode = usersList.getUser(i).getTransactions().getStart();
-
+            TransactionLinkedList linkedList = usersList.getUser(i).getTransactions();
+            if (linkedList.getLen() == 0) {
+                continue;
+            }
+            ListNode listNode = linkedList.getStart();
             while (listNode != null) {
                 flag = false;
                 for (int j = 0; j < usersList.getUserCount(); j++) {
                     if (i != j) {
-                        if (TransactionHelper.hasAPair(listNode.getValue(), usersList.getUser(j).getTransactions())) {
+                        if (TransactionHelper.hasAPair(listNode.getValue(),
+                                usersList.getUser(j).getTransactions())) {
                             flag = true;
                             break;
                         }

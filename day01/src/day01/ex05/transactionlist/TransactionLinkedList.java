@@ -9,18 +9,6 @@ import day01.ex05.userslist.UsersArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
-class TransactionNotFoundException extends RuntimeException {
-    public TransactionNotFoundException() {
-        super("No such transaction");
-    }
-}
-
-class TransactionListEmptyException extends RuntimeException {
-    public TransactionListEmptyException() {
-        super("Transaction list is empty");
-    }
-}
-
 public class TransactionLinkedList implements TransactionList {
 
     private ListNode start;
@@ -35,7 +23,7 @@ public class TransactionLinkedList implements TransactionList {
 
     public Integer getLen() {
         if (start == null) {
-            throw new TransactionListEmptyException();
+            return 0;
         }
         return len;
     }
@@ -69,13 +57,13 @@ public class TransactionLinkedList implements TransactionList {
         if (start == null) {
             throw new TransactionListEmptyException();
         }
-        if (start.getValue().getId() == id) {
+        if (start.getValue().getId().equals(id)) {
             start = start.getNext();
             len--;
             return ;
         }
         for (int i = 0; i < len; i++) {
-            if (temp.getValue().getId() == id) {
+            if (temp.getValue().getId().equals(id)) {
                 break ;
             }
             temp = temp.getNext();

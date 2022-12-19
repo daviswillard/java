@@ -1,12 +1,7 @@
 package day01.ex05.userslist;
 
 import day01.ex05.models.User;
-
-class UserNotFoundException extends RuntimeException {
-    public UserNotFoundException(String message) {
-        super(message);
-    }
-}
+import day01.ex05.models.UserNotFoundException;
 
 public class UsersArrayList implements UsersList {
 
@@ -44,7 +39,7 @@ public class UsersArrayList implements UsersList {
                 return user;
             }
         }
-        throw new UserNotFoundException("No User with such id");
+        throw new UserNotFoundException();
     }
 
     @Override

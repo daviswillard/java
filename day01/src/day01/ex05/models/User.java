@@ -11,19 +11,12 @@ public class User {
     private Integer balance;
 
     public User(String name, int balance) {
+        if (balance < 0) {
+            throw new NegativeBalanceException();
+        }
         this.balance = balance;
         this.name = name;
         this.id = UserIdsGenerator.getInstance().generateId();
-        checkBalance();
-    }
-
-    private void	checkBalance() {
-        if (balance < 0) {
-            System.err.println("User " + name + " has negative balance"
-                    + " (id: " + id + ')');
-            System.err.println("Defaulting balance to zero...");
-            balance = 0;
-        }
     }
 
     public TransactionLinkedList getTransactions() {
@@ -43,7 +36,7 @@ public class User {
     }
 
     public void setBalance(int balance) {
-        this.balance = balance;
+        this.balance += balance;
     }
 
     @Override
