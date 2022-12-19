@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Program
 {
 
-	static int	isPrime(int number) {
+	private static int	isPrime(int number) {
 		if (number <= 1) {
 			return 0;
 		}

@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Program
 {
-	static boolean	isPrime(int number) {
+	private static boolean	isPrime(int number) {
         if (number <= 1) {
             return false;
         }
@@ -25,7 +25,7 @@ public class Program
         return true;
 	}
 
-	static int	toNumber(int number) {
+	private static int	toNumber(int number) {
 		int	ret;
 
 		ret = 0;

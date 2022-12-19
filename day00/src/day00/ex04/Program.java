@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Program
 {
-    static int  compareElements(int comp, int[][] array) {
+    private static int  compareElements(int comp, int[][] array) {
         int index = 0;
 
         while (index < 10) {
@@ -19,7 +19,7 @@ public class Program
         return -1;
     }
 
-    static void swapElements(int[][] array, int arr_i, final int[] src,
+    private static void swapElements(int[][] array, int arr_i, final int[] src,
                              int src_i) {
         while (arr_i < 10 && array[arr_i][0] == src[src_i]
                 && array[arr_i][1] < src_i) {
@@ -31,7 +31,7 @@ public class Program
         shiftElement(array, arr_i, src, src_i);
     }
 
-    static void shiftElement(int[][] array, int arr_i, final int[] src,
+    private static void shiftElement(int[][] array, int arr_i, final int[] src,
                              int src_i) {
         int temp = 8;
 
@@ -44,7 +44,7 @@ public class Program
         array[arr_i][1] = src_i;
     }
 
-    static void countChars(int[][] result, final int[] src) {
+    private static void countChars(int[][] result, final int[] src) {
         for (int i = 0; i < 65536; i++) {
             int j;
 
@@ -62,7 +62,7 @@ public class Program
         }
     }
 
-    static int  getSharps(int mod, double scale) {
+    private static int  getSharps(int mod, double scale) {
         int     times;
 
         if (mod < scale) {
@@ -72,7 +72,7 @@ public class Program
         return times;
     }
 
-    static void printHistogram(int sharp, int[] array_element, int iter) {
+    private static void printHistogram(int sharp, int[] array_element, int iter) {
         int sum = sharp + iter;
         if (array_element[0] == 0 && array_element[1] == 0)
             return;
@@ -87,7 +87,7 @@ public class Program
         }
     }
 
-    static void printResult(int[] sharps, int[][] array) {
+    private static void printResult(int[] sharps, int[][] array) {
         if (array[0][0] == 0) {
             return;
         }

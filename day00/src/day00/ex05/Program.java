@@ -15,8 +15,8 @@ class Program {
         String[] students = getNameArray(console);
         int[][] lessons = getLessonsArray(console);
         fillAttendanceList(students, console);
-        printAttendanceList(students, lessons);
         console.close();
+        printAttendanceList(students, lessons);
     }
 
     private static void printAttendanceList(String[] students, int[][] lessons) {

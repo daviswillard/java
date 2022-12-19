@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Program
 {
-	static long	checkMin(long cont, Scanner console) {
+	private static long	checkMin(long cont, Scanner console) {
 		int	temp = 9;
 
 		cont *= 10;
@@ -19,7 +19,7 @@ public class Program
 		return cont + temp;
 	}
 
-	static long	printGraphic(long cont, int count, int iter) {
+	private static long	printGraphic(long cont, int count, int iter) {
 		long	div = 1;
 		int		chars;
 
