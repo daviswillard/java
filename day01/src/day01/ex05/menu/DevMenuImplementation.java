@@ -35,7 +35,7 @@ public class DevMenuImplementation implements Menu {
 			System.err.println("Transfer was not completed!\nCheck data validity and try again");
 			return ;
 		}
-		System.out.println("The transfer us completed");
+		System.out.println("The transfer is completed");
 	}
 
 	@Override

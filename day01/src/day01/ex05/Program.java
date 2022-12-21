@@ -38,6 +38,8 @@ public class Program {
                 i = Integer.parseInt(console.nextLine());
                 if ((i == 5 || i == 6) && menu instanceof MenuImplementation) {
                     System.err.println("Numbers 5 and 6 reserved for dev");
+                    System.out.println("---------------------------------------------------------");
+                    continue;
                 }
                 switch (i) {
 
@@ -54,6 +56,7 @@ public class Program {
                             user = new User(split1[0], Integer.parseInt(split1[1]));
                         } catch (NegativeBalanceException ex) {
                             ex.printStackTrace();
+                            System.err.println("Illegal input");
                             break;
                         }
                         menu.addUser(user);
@@ -65,7 +68,7 @@ public class Program {
                         try {
                             menu.showBalance(i2);
                         } catch (UserNotFoundException ex) {
-                            ex.printStackTrace();
+                            System.err.println("User not found");
                         }
                         break;
 
@@ -80,9 +83,9 @@ public class Program {
                             menu.performTransfer(Integer.parseInt(split3[0]), Integer.parseInt(split3[1]),
                                     Integer.parseInt(split3[2]));
                         } catch (IllegalTransactionException ex) {
-                            ex.printStackTrace();
+                            System.err.println("Couldn't complete transaction");
                         } catch (UserNotFoundException ex) {
-                            ex.printStackTrace();
+                            System.err.println("User not found");
                         }
                         break;
 
@@ -92,7 +95,7 @@ public class Program {
                         try {
                             menu.showAllTransaction(i4);
                         } catch (UserNotFoundException ex) {
-                            ex.printStackTrace();
+                            System.err.println("User not found");
                         }
                         break;
 
@@ -106,13 +109,25 @@ public class Program {
                         try {
                             ((DevMenuImplementation) menu)
                                     .removeTransaction(Integer.parseInt(split5[0]), UUID.fromString(split5[1]));
-                        } catch (UserNotFoundException | TransactionNotFoundException | TransactionListEmptyException ex) {
-                            ex.printStackTrace();
+                        } catch (UserNotFoundException ex) {
+                            System.err.println("User not found");
+                        } catch (TransactionNotFoundException ex) {
+                            System.err.println("No such transaction");
+                        } catch (TransactionListEmptyException ex) {
+                            System.err.println("Transaction list is empty");
+                        } catch (IllegalArgumentException ex) {
+                            System.err.println("Illegal UUID");
                         }
                         break;
 
                     case 6:
-                        ((DevMenuImplementation) menu).checkTransferValidity();
+                        try {
+                            ((DevMenuImplementation) menu).checkTransferValidity();
+                        } catch (UserNotFoundException ex) {
+                            System.err.println("User not found");
+                        } catch (TransactionListEmptyException ex) {
+                            System.err.println("Transaction list is empty");
+                        }
                         break;
                     case 7:
                         menu.finish();
