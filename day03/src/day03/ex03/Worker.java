@@ -20,13 +20,20 @@ public class Worker implements Runnable {
 		while (!(current = data.getLink()).isEmpty()) {
 			try (BufferedInputStream stream = new BufferedInputStream(new URL(current).openStream());
 					FileOutputStream outputStream =
-							new FileOutputStream(homeDir + "/" + current.substring(current.lastIndexOf('/')))) {
+							new FileOutputStream(homeDir + "/download/" + current.substring(current.lastIndexOf('/') + 1))) {
+				System.out.println(Thread.currentThread().getName() +
+						" start download " +
+						current.substring(current.lastIndexOf('/') + 1));
 				byte[] buffer = new byte[1024];
 				int bytesRead;
 				while ((bytesRead = stream.read(buffer, 0, 1024)) != -1) {
 					outputStream.write(buffer, 0, bytesRead);
 				}
+				System.out.println(Thread.currentThread().getName() +
+						" completed download " +
+						current.substring(current.lastIndexOf('/') + 1));
 			} catch (IOException e) {
+				System.err.println("Thrown exception!\n" + e.getMessage());
 			}
 		}
 	}

@@ -2,7 +2,7 @@ package day03.ex00;
 
 public class MyThread extends Thread {
 
-	private final int	count;
+	private final int count;
 	private final String name;
 
 	MyThread(String name, int count) {

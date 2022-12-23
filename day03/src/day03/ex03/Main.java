@@ -12,20 +12,22 @@ public class Main {
 
 		private static void createDir() {
 			File directory = new File(downloadDir);
-			if (! directory.exists() ) {
-				directory.mkdir();
+			if (!directory.exists()) {
+				if (!directory.mkdir()) {
+					throw new RuntimeException("Couldn't create download directory");
+				}
 			}
-			if (! directory.isDirectory()) {
+			if (!directory.isDirectory()) {
 				throw new RuntimeException("File " + downloadDir + " is not a directory!");
 			}
 		}
 
-		private static String[] parseFile(String filePath) {
+		private static String[] parseFile() {
 
 			String[] ret = new String[10];
 
 			try (
-					FileReader reader = new FileReader(filePath);
+					FileReader reader = new FileReader("ex03/files_urls.txt");
 					BufferedReader bufferedReader = new BufferedReader(reader)
 			) {
 				int i = 0;
@@ -38,15 +40,15 @@ public class Main {
 						ret = temp;
 					}
 				}
-			} catch (IOException ex) {
+			} catch (IOException ignored) {
 
 			}
 			return ret;
 		}
 
-		private static String[] parse(String filePath) {
+		private static String[] parse() {
 			createDir();
-			return parseFile(filePath);
+			return parseFile();
 		}
 	}
 
@@ -57,7 +59,7 @@ public class Main {
 		if (args == null || args.length != 1 || !args[0].startsWith("--threadCount=")) {
 			throw new RuntimeException("No or too much arguments!");
 		}
-		linksPool = FileParser.parse("files_urls.txt");
+		linksPool = FileParser.parse();
 		DataObject dataObject = new DataObject(linksPool);
 		threadCount = Integer.parseInt(args[0].substring(args[0].indexOf('=') + 1));
 		Worker[] workers = new Worker[threadCount];
@@ -73,8 +75,7 @@ public class Main {
 			for (Thread thread : threads) {
 				thread.join();
 			}
-		} catch (InterruptedException ex) {
-
+		} catch (InterruptedException ignored) {
 		}
 	}
 }
