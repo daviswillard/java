@@ -28,8 +28,8 @@ public class Program {
         int         threadsCount;
         int[]       array;
         int         resultST = 0;
-        int         resultMT = 0;
-        Thread[]    threadArr = null;
+        int         resultMT;
+        Thread[]    threadArr;
         Result      sum = new Result();
 
 
