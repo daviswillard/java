@@ -46,7 +46,6 @@ public class Program {
 }
 
 class Printer {
-
 	static int flag = 0;
 
 	public synchronized void print(String message, int i) throws InterruptedException {

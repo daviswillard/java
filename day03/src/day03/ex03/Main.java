@@ -52,10 +52,29 @@ public class Main {
 
 	public static void main(String[] args) {
 		String[] linksPool;
+		int threadCount;
 
-		if (args == null || args.length != 1) {
+		if (args == null || args.length != 1 || !args[0].startsWith("--threadCount=")) {
 			throw new RuntimeException("No or too much arguments!");
 		}
-		linksPool = FileParser.parse(args[0]);
+		linksPool = FileParser.parse("files_urls.txt");
+		DataObject dataObject = new DataObject(linksPool);
+		threadCount = Integer.parseInt(args[0].substring(args[0].indexOf('=') + 1));
+		Worker[] workers = new Worker[threadCount];
+		for (int i = 0; i < workers.length; i++) {
+			workers[i] = new Worker(dataObject);
+		}
+		Thread[] threads = new Thread[threadCount];
+		for (int i = 0; i < threads.length; i++) {
+			threads[i] = new Thread(workers[i]);
+			threads[i].start();
+		}
+		try {
+			for (Thread thread : threads) {
+				thread.join();
+			}
+		} catch (InterruptedException ex) {
+
+		}
 	}
 }
