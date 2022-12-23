@@ -12,12 +12,12 @@ public class DataObject {
 		return i == linksPool.length || linksPool[i] == null;
 	}
 
-	public String getLink() {
+	public LinkWithNumber getLink() {
 		if (isAtEnd()) {
-			return "";
+			return new LinkWithNumber("", -1);
 		}
 		synchronized (linksPool) {
-			return linksPool[i++];
+			return new LinkWithNumber(linksPool[i], i++);
 		}
 	}
 }

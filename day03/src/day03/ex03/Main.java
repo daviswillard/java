@@ -27,7 +27,7 @@ public class Main {
 			String[] ret = new String[10];
 
 			try (
-					FileReader reader = new FileReader("ex03/files_urls.txt");
+					FileReader reader = new FileReader("day03/ex03/files_urls.txt");
 					BufferedReader bufferedReader = new BufferedReader(reader)
 			) {
 				int i = 0;
