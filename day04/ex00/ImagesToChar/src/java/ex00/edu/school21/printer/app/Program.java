@@ -1,6 +1,6 @@
 package ex00.edu.school21.printer.app;
 
-import ex01.edu.school21.printer.logic.Logic;
+import ex00.edu.school21.printer.logic.Logic;
 
 public class Program {
 
