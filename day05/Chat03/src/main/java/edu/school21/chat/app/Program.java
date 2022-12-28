@@ -1,12 +1,15 @@
 package edu.school21.chat.app;
 
-import com.zaxxer.hikari.HikariDataSource;
+import edu.school21.chat.models.Chatroom;
+import edu.school21.chat.models.Message;
+import edu.school21.chat.models.User;
+import edu.school21.chat.repositories.ChatroomRepositoryJdbcImpl;
+import edu.school21.chat.repositories.MessagesRepositoryJdbcImpl;
+import edu.school21.chat.repositories.UserRepositoryJdbcImpl;
 import com.zaxxer.hikari.HikariConfig;
-import edu.school21.chat.models.*;
-import edu.school21.chat.repositories.*;
+import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.Connection;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Program {
@@ -37,22 +40,12 @@ public class Program {
             {
                 User creator = new User(4L, "frip", "side", new ArrayList<>(), new ArrayList<>());
                 Chatroom room = new Chatroom(4L, "ever gaol", creator, new ArrayList<>());
-                Message message = new Message(null, creator, room, "Hello!", LocalDateTime.now());
+                Message message = new Message(null, creator, room, "Bye", null);
 
-                msgRep.save(message);
-                System.out.println(message.getId());
+                msgRep.update(message);
             }
-            {
-                User creator = new User(2L, "quark", "enigmatic", new ArrayList<>(), new ArrayList<>());
-                Chatroom room = new Chatroom(2L, "asylum", creator, new ArrayList<>());
-                Message message = new Message(null, creator, room, "I'm trapped!", LocalDateTime.now());
-
-                msgRep.save(message);
-                System.out.println(message.getId());
-            }
-
         } catch (Exception exc) {
-            System.err.println(exc.getMessage());
+           exc.printStackTrace();
         }
     }
 }

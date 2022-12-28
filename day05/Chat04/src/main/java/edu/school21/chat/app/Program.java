@@ -1,13 +1,17 @@
 package edu.school21.chat.app;
 
-import com.zaxxer.hikari.HikariDataSource;
+import edu.school21.chat.models.Chatroom;
+import edu.school21.chat.models.Message;
+import edu.school21.chat.models.User;
+import edu.school21.chat.repositories.ChatroomRepositoryJdbcImpl;
+import edu.school21.chat.repositories.MessagesRepositoryJdbcImpl;
+import edu.school21.chat.repositories.UserRepositoryJdbcImpl;
 import com.zaxxer.hikari.HikariConfig;
-import edu.school21.chat.models.*;
-import edu.school21.chat.repositories.*;
+import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.Connection;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Program {
     private static final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/postgres";
@@ -33,26 +37,12 @@ public class Program {
             ChatroomRepositoryJdbcImpl chatRep = new ChatroomRepositoryJdbcImpl(con, userRep);
             MessagesRepositoryJdbcImpl msgRep = new MessagesRepositoryJdbcImpl(con, chatRep, userRep);
 
-
             {
-                User creator = new User(4L, "frip", "side", new ArrayList<>(), new ArrayList<>());
-                Chatroom room = new Chatroom(4L, "ever gaol", creator, new ArrayList<>());
-                Message message = new Message(null, creator, room, "Hello!", LocalDateTime.now());
-
-                msgRep.save(message);
-                System.out.println(message.getId());
+                List<User> users = userRep.findAll(0, 2);
+                System.out.println(users);
             }
-            {
-                User creator = new User(2L, "quark", "enigmatic", new ArrayList<>(), new ArrayList<>());
-                Chatroom room = new Chatroom(2L, "asylum", creator, new ArrayList<>());
-                Message message = new Message(null, creator, room, "I'm trapped!", LocalDateTime.now());
-
-                msgRep.save(message);
-                System.out.println(message.getId());
-            }
-
         } catch (Exception exc) {
-            System.err.println(exc.getMessage());
+           exc.printStackTrace();
         }
     }
 }

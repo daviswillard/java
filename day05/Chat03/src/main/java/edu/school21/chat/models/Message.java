@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Message {
-    private final Long          id;
-    private final User          author;
+    private       Long          id;
+    private final User author;
     private final Chatroom      room;
     private final String        text;
     private final LocalDateTime dateTime;
@@ -29,6 +29,10 @@ public class Message {
 
     public User getAuthor() {
         return author;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Chatroom getRoom() {
@@ -62,11 +66,12 @@ public class Message {
 
     @Override
     public String   toString() {
-        return "Message : {\n" + " id=" + id +
-                ",\n author='" + author + '\'' +
-                ",\n room=" + room +
-                ",\n text=" + text +
-                ",\n date and time=" + dateTime + '\n' +
+        return "Chatroom{" +
+                "id=" + id +
+                ", author='" + author + '\'' +
+                ", room=" + room +
+                ", text=" + text +
+                ", date and time=" + dateTime +
                 '}';
     }
 }

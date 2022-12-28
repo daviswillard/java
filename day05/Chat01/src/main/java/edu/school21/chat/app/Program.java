@@ -24,16 +24,21 @@ public class Program {
 
     public static void main(String[] argv) {
 
-        try (HikariDataSource dataSource = new HikariDataSource(HikariConnect())) {
-            Scanner console = new Scanner(System.in);
-            System.out.println("Enter id of searched message");
-            long id = console.nextLong();
-            Class.forName("org.postgresql.Driver");
-            MessagesRepositoryJdbcImpl obj = new MessagesRepositoryJdbcImpl(dataSource);
-            Optional<Message> message = obj.findById(id);
-            System.out.println(message.orElse(null));
+        try (HikariDataSource dataSource = new HikariDataSource(HikariConnect());
+             Scanner console = new Scanner(System.in)) {
+            while (true) {
+                System.out.println("Enter id of searched message");
+                long id = console.nextLong();
+                if (id < 0) {
+                    break;
+                }
+
+                MessagesRepositoryJdbcImpl obj = new MessagesRepositoryJdbcImpl(dataSource);
+                Optional<Message> message = obj.findById(id);
+                System.out.println(message.orElse(null));
+            }
         } catch (Exception exc) {
-            System.err.println(exc.getMessage());
+            exc.printStackTrace();
         }
     }
 }

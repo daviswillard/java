@@ -30,4 +30,4 @@ rm -rf target/META-INF
 jar cfm ./target/images-to-chars-printer.jar ./src/manifest.txt -C ./target .
 
 #   Running java program
-java -jar target/images-to-chars-printer.jar --white=red --black=green
+java -jar target/images-to-chars-printer.jar --white=blue --black=red

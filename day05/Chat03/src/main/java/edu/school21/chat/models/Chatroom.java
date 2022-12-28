@@ -6,10 +6,10 @@ import java.util.Objects;
 public class Chatroom {
     private final Long          chatroomID;
     private String              chatroomName;
-    private String              chatroomOwner;
+    private User chatroomOwner;
     private final List<Message> messages;
 
-    public Chatroom(Long id, String name, String owner, List<Message> messages) {
+    public Chatroom(Long id, String name, User owner, List<Message> messages) {
         chatroomID = id;
         chatroomName = name;
         chatroomOwner = owner;
@@ -24,7 +24,7 @@ public class Chatroom {
         return chatroomName;
     }
 
-    public String getChatroomOwner() {
+    public User getChatroomOwner() {
         return chatroomOwner;
     }
 
@@ -32,7 +32,7 @@ public class Chatroom {
         this.chatroomName = chatroomName;
     }
 
-    public void setChatroomOwner(String chatroomOwner) {
+    public void setChatroomOwner(User chatroomOwner) {
         this.chatroomOwner = chatroomOwner;
     }
 
@@ -58,7 +58,7 @@ public class Chatroom {
 
     @Override
     public String   toString() {
-        return "{" +
+        return "Chatroom{" +
                 "id=" + chatroomID +
                 ", name='" + chatroomName + '\'' +
                 ", owner=" + chatroomOwner +

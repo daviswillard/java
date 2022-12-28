@@ -1,14 +1,15 @@
 package edu.school21.chat.repositories;
 
+import edu.school21.chat.exceptions.NotSavedSubEntityException;
+import edu.school21.chat.models.Message;
+
 import java.sql.*;
 import java.util.Optional;
-import edu.school21.chat.models.*;
-import edu.school21.chat.exceptions.NotSavedSubEntityException;
 
 public class MessagesRepositoryJdbcImpl implements MessagesRepository {
-    private final Connection                    dataSource;
-    private final ChatroomRepositoryJdbcImpl    chatroomRepository;
-    private final UserRepositoryJdbcImpl        userRepository;
+    private final Connection dataSource;
+    private final ChatroomRepositoryJdbcImpl chatroomRepository;
+    private final UserRepositoryJdbcImpl userRepository;
 
     public MessagesRepositoryJdbcImpl(Connection dataSource, ChatroomRepositoryJdbcImpl chatroomRepository,
                                       UserRepositoryJdbcImpl userRepository) {
@@ -60,6 +61,30 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository {
             }
         } catch (SQLException exc) {
             exc.printStackTrace();
+        }
+    }
+
+    @Override
+    public void update(Message message) {
+        final String QUERY_TEMPLATE = "UPDATE chat.message SET text = ?, timestamp = ? WHERE (author=? AND room=?)";
+
+        try {
+            PreparedStatement query = dataSource.prepareStatement(QUERY_TEMPLATE);
+            query.setLong(3, message.getAuthor().getUserID());
+            query.setLong(4, message.getRoom().getChatroomID());
+            query.setString(1, message.getText());
+            if (message.getDateTime() != null) {
+                query.setTimestamp(2, Timestamp.valueOf(message.getDateTime()));
+            } else {
+                query.setTimestamp(2, null);
+            }
+            if (query.executeUpdate() > 0) {
+                System.out.println("Message(s) updated");
+            } else {
+                System.err.println("Couldn't update any message");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 }
