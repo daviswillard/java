@@ -1,6 +1,5 @@
 package student.dwillard.classes;
 
-import java.util.Random;
 
 public class Player {
 	private String nickname;
@@ -28,7 +27,7 @@ public class Player {
 	}
 
 	public String trashTalk(String target) {
-		return target + ", you are worst, delete this game.";
+		return target + ", you are the worst, delete this game.";
 	}
 
 	@Override
