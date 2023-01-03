@@ -1,13 +1,12 @@
 package student.dwillard.format;
 
+import static student.dwillard.Main.separator;
+
 import student.dwillard.Main;
 import student.dwillard.classes.Family;
 import student.dwillard.classes.Player;
 
 public class FormatReflection {
-  static final String separator = "---------------------";
-
-
   public static void listClasses() {
     System.out.println("Classes:");
     System.out.printf("%s%s\n", "  - ", Family.class.getSimpleName());
