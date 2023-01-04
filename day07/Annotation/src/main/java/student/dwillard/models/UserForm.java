@@ -4,7 +4,7 @@ import student.dwillard.annotations.HtmlForm;
 import student.dwillard.annotations.HtmlInput;
 
 @HtmlForm(fileName = "user_form.html", action = "/users", method = "post")
-public class UserFrom {
+public class UserForm {
   @HtmlInput(type = "text", name = "first_name", placeholder = "Enter First Name")
   private String firstName;
 

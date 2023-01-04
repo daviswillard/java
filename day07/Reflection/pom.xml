@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>student.dwillard</groupId>
-    <artifactId>reflection</artifactId>
+    <artifactId>reflect</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
