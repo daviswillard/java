@@ -7,6 +7,9 @@
     <groupId>student.dwillard</groupId>
     <artifactId>reflect</artifactId>
     <version>1.0-SNAPSHOT</version>
+  <modules>
+    <module>Annotation-user</module>
+  </modules>
   <packaging>pom</packaging>
 
   <properties>
