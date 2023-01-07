@@ -16,7 +16,7 @@ public class EmbeddedDataSourceTest {
     private DataSource dataSource;
 
     @BeforeEach
-    public void init() throws SQLException {
+    public void init() {
         EmbeddedDatabaseBuilder base = new EmbeddedDatabaseBuilder();
         dataSource = base.setType(EmbeddedDatabaseType.HSQL)
                 .addScript("/schema.sql")
