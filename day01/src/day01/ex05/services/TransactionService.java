@@ -37,7 +37,7 @@ public class TransactionService {
 
     public String getUserBalance(Integer clientID) throws UserNotFoundException {
         if (clientID == null) {
-            System.err.println("You passed nonexistent client argument!");
+            System.err.println("You passed nonexistent edu.school21.sockets.client argument!");
             throw new UserNotFoundException();
         }
         User temp = usersList.getUser(clientID);

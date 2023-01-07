@@ -43,7 +43,7 @@ public class TransactionService {
 
     public Integer getUserBalance(User client) {
         if (client == null || client.getId() == null) {
-            System.err.println("You passed nonexistent client argument!");
+            System.err.println("You passed nonexistent edu.school21.sockets.client argument!");
             System.exit(0);
         }
         return usersList.getUser(client.getId()).getBalance();
@@ -51,7 +51,7 @@ public class TransactionService {
 
     public Integer getUserBalance(Integer clientID) {
         if (clientID == null) {
-            System.err.println("You passed nonexistent client argument!");
+            System.err.println("You passed nonexistent edu.school21.sockets.client argument!");
             System.exit(0);
         }
         return usersList.getUser(clientID).getBalance();

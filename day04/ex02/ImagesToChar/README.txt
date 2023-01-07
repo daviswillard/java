@@ -13,7 +13,7 @@ jar -xf ../lib/jcommander-1.78.jar
 cd ..
 
 #   Compiling java sources and putting result in target directory
-javac -sourcepath ./src/java -cp target -d target src/java/ex02/edu/school21/printer/app/*.java
+javac -sourcepath ./src/java -cp target -d target src/java/ex02/edu/school21/printer/edu.school21.sockets.app/*.java
 cp -R ./src/resources ./target/
 
 rm -rf target/META-INF
@@ -23,7 +23,7 @@ rm -rf target/META-INF
 #       Arg2 is black color symbol
 #       Arg3 is the absolute path to .bmp image
 #   Like that:
-#   java -classpath ./target ex02.edu.school21.printer.app.Program "Arg1" "Arg2" "Arg3"
+#   java -classpath ./target ex02.edu.school21.printer.edu.school21.sockets.app.Program "Arg1" "Arg2" "Arg3"
 
 
 #   Create .jar archive
