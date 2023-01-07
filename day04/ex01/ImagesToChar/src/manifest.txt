@@ -1,1 +1,1 @@
-Main-Class: edu.school21.sockets.app.ex01.edu.school21.printer.Program
+Main-Class: ex01.edu.school21.printer.app.Program
