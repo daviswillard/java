@@ -10,8 +10,12 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 import static com.diogonunes.jcolor.Attribute.BACK_COLOR;
 
 public class Logic {
+
     public static void bmpImageToChar(Color white, Color black, String bmpImagePath) {
         BufferedImage   bmpImage = null;
+        if (white == null || black == null) {
+            throw new RuntimeException("Empty color parameters!");
+        }
         try {
             bmpImage = ImageIO.read(new File(bmpImagePath));
         } catch (IOException e) {
