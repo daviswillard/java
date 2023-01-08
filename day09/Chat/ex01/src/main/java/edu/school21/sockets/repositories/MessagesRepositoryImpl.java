@@ -1,7 +1,6 @@
 package edu.school21.sockets.repositories;
 
 import edu.school21.sockets.models.Message;
-import edu.school21.sockets.models.User;
 import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,14 +39,24 @@ public class MessagesRepositoryImpl implements CrudRepository<Message> {
     final String QUERY_TEMPLATE =
         "INSERT INTO chat.message (author, body, timestamp) VALUES (?, ?, ?)";
 
-    jdbcTemplate.update(QUERY_TEMPLATE, entity.getAuthor(), entity.getBody(), entity.getTimestamp());
+    jdbcTemplate.update(
+        QUERY_TEMPLATE,
+        entity.getAuthor(),
+        entity.getBody(),
+        entity.getTimestamp()
+    );
   }
 
   @Override
   public void update(Message entity) {
     final String QUERY_TEMPLATE = "UPDATE chat.message SET " +
         "author = ?, body = ?, timestamp = ? WHERE id = ?";
-    jdbcTemplate.update(QUERY_TEMPLATE, entity.getAuthor(), entity.getBody(), entity.getTimestamp());
+    jdbcTemplate.update(
+        QUERY_TEMPLATE,
+        entity.getAuthor(),
+        entity.getBody(),
+        entity.getTimestamp()
+    );
   }
 
   @Override

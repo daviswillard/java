@@ -11,21 +11,30 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.LinkedList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @Parameters(separators = "=")
 public class Server {
+  public static void safePrintln(String message) {
+    synchronized (System.out) {
+      System.out.println(message);
+    }
+  }
+
   @Parameter(names = "--port")
   private int port;
-
 
   private BufferedReader in;
   private BufferedWriter out;
 
   private final UsersService usersService;
   private final MessagesRepositoryImpl messagesRepository;
+
+  private final List<Socket> sessionList = new LinkedList<>();
 
   @Autowired
   public Server(UsersService usersService, MessagesRepositoryImpl messagesRepository) {

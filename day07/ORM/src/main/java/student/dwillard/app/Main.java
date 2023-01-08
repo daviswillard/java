@@ -1,4 +1,4 @@
-package student.dwillard;
+package student.dwillard.app;
 
 public class Main {
 
