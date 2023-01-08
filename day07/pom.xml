@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
   <modules>
     <module>Annotation-user</module>
+    <module>ORM</module>
   </modules>
   <packaging>pom</packaging>
 
