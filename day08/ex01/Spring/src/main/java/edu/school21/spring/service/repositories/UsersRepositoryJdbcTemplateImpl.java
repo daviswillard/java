@@ -1,6 +1,7 @@
 package edu.school21.spring.service.repositories;
 
 import edu.school21.spring.service.models.User;
+import java.sql.PreparedStatement;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -25,8 +26,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     private final JdbcTemplate                  jdbcTemplate;
     private final DriverManagerDataSource       dataSource;
 
-    public UsersRepositoryJdbcTemplateImpl(DriverManagerDataSource dataSource)
-            throws SQLException {
+    public UsersRepositoryJdbcTemplateImpl(DriverManagerDataSource dataSource) {
         this.dataSource = dataSource;
         jdbcTemplate = new JdbcTemplate(this.dataSource);
     }
@@ -51,14 +51,15 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 
     @Override
     public void save(User entity) {
+        final String QUERY_TEMPLATE = "INSERT INTO service.user VALUES (?, ?)";
 
+        jdbcTemplate.update(QUERY_TEMPLATE, entity.getEmail(), entity.getId());
     }
 
     @Override
     public void update(User entity) {
         final String QUERY_TEMPLATE = "UPDATE service.user SET " +
-                "email = ? "
-                +" WHERE id = ?";
+                "email = ? WHERE id = ?";
         jdbcTemplate.update(QUERY_TEMPLATE, entity.getEmail(), entity.getId());
     }
 
@@ -73,8 +74,8 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
         final String SQL_STR = "SELECT * FROM service.user WHERE email = ?";
         User ret = jdbcTemplate
                 .queryForObject(SQL_STR,
-                        new Object[]{email},
-                        new UserMapper());
+                new UserMapper(),
+                email);
         return Optional.ofNullable(ret);
     }
 }
