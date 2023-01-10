@@ -17,6 +17,8 @@ public class Session extends Thread {
   private final BufferedWriter out;
   private final Socket userSocket;
   private final Server server;
+
+  private boolean isLoggedIn;
   private User user;
 
   private final UsersService usersService;
@@ -36,6 +38,11 @@ public class Session extends Thread {
     this.usersService = usersService;
     this.messagesRepository = messagesRepository;
     this.server = server;
+    isLoggedIn = false;
+  }
+
+  public boolean isLoggedIn() {
+    return isLoggedIn;
   }
 
   private void end() {
@@ -64,6 +71,7 @@ public class Session extends Thread {
       messageToClient("Enter password:");
       password = in.readLine();
       usersService.signUp(username, password);
+
     } catch (RuntimeException ex) {
       messageToClient(ex.getMessage());
       return false;
@@ -72,40 +80,40 @@ public class Session extends Thread {
     return true;
   }
 
-  private boolean serverSignIn() throws IOException {
+  private void serverSignIn() throws IOException {
     String username;
     String password;
 
     try {
+
       messageToClient("Enter username:");
       username = in.readLine();
       messageToClient("Enter password:");
       password = in.readLine();
       user = usersService.signIn(username, password);
+      isLoggedIn = true;
     } catch (RuntimeException ex) {
       messageToClient(ex.getMessage());
-      return false;
+      return;
     }
     messageToClient("Successfully signed in!");
-    return true;
   }
 
   private boolean authenticator() throws IOException {
     String message;
 
-    while (true) {
+    while (!isLoggedIn) {
       message = in.readLine();
-      if (!message.isEmpty()) {
-        break;
-      }
-    }
-    if (message.equalsIgnoreCase("Sign up")) {
-      if (!serverSignUp()) {
+      if (message.equalsIgnoreCase("Sign up")) {
+        if (!serverSignUp()) {
+          return false;
+        }
+        serverSignIn();
+      } else if (message.equalsIgnoreCase("Sign in")) {
+        serverSignIn();
+      } else if (message.equalsIgnoreCase("exit")){
         return false;
       }
-      return serverSignIn();
-    } else if (message.equalsIgnoreCase("Sign in")) {
-      return serverSignIn();
     }
     return true;
   }
@@ -113,29 +121,29 @@ public class Session extends Thread {
   private void readMessages() throws IOException {
     String message;
 
-    while (true) {
+    while (isLoggedIn) {
       message = in.readLine();
       if (message.equalsIgnoreCase("exit")) {
         messageToClient("You have left the chat.");
         return;
-      } else {
-        message = user.getUsername() + ":" + message;
-        server.printToAll(message);
-        messagesRepository.save(
-            new Message(
-              user.getId(),
-              message,
-              LocalDateTime.now()
-            )
-        );
       }
+      message = user.getUsername() + ":" + message;
+      server.printToAll(message);
+      messagesRepository.save(
+          new Message(
+            user.getId(),
+            message,
+            LocalDateTime.now()
+          )
+      );
     }
   }
 
 
-  public void startSession() {
+  private void startSession() {
+
     try {
-      messageToClient("Hello from Server!");
+      messageToClient("Hello from server");
       messageToClient("Sign up or sign in");
       if (!authenticator()) {
         messageToClient("Authentication failed! Closing connection now");
@@ -153,6 +161,7 @@ public class Session extends Thread {
         userSocket.close();
       } catch (IOException exception) {
         exception.printStackTrace();
+        throw new RuntimeException(exception.getMessage());
       }
     }
   }

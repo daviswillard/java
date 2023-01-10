@@ -17,7 +17,9 @@ public class Server {
 
  synchronized void printToAll(String message) throws IOException {
     for (Session iter: sessionList) {
-      iter.messageToClient(message);
+      if (iter.isLoggedIn()) {
+        iter.messageToClient(message);
+      }
     }
  }
 
@@ -41,8 +43,8 @@ public class Server {
 
       while (true) {
         Session session = new Session(socket.accept(), usersService, messagesRepository, this);
-        sessionList.add(session);
         session.start();
+        sessionList.add(session);
       }
     } catch (IOException ex) {
       ex.printStackTrace();

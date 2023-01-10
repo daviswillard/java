@@ -31,49 +31,40 @@ public class Client {
   }
 
   private void dialogWithServer() {
-    Runnable read = () -> {
+    Runnable readInput = () -> {
       String message;
       try {
         while (true) {
-          message = in.readLine();
-          if (message.equals("Authentication failed! Closing connection now")
-              || message.equals("You have left the chat.")) {
+            message = in.readLine();
             System.out.println(message);
-            break;
-          }
-          if (!message.isEmpty()) {
-            System.out.println(message);
-          }
+            if (message.equals("Authentication failed! Closing connection now")
+            || message.equals("You have left the chat.")) {
+              break;
+            }
+        }
+        isConnected = false;
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    };
+    Thread reader = new Thread(readInput);
+    reader.start();
+
+    String message;
+
+    while (true) {
+      try {
+        message = console.nextLine();
+        if (!isConnected) {
+          break;
+        } else {
+          messageToServer(message);
         }
       } catch (IOException e) {
         e.printStackTrace();
       }
-      isConnected = false;
-    };
-
-    Runnable write = () -> {
-      while (true) {
-        String message;
-        try {
-          message = in.readLine();
-          if (!isConnected) {
-            break;
-          } else {
-            messageToServer(message);
-          }
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-      }
-    };
-
-    Thread writer = new Thread(write);
-    Thread reader = new Thread(read);
-
-    writer.start();
-    reader.start();
+    }
     try {
-      writer.join();
       reader.join();
     } catch (InterruptedException expected) {
 
