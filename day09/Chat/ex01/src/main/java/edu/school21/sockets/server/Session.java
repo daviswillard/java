@@ -156,9 +156,15 @@ public class Session extends Thread {
       ex.printStackTrace();
 
       try {
-        in.close();
-        out.close();
-        userSocket.close();
+        if (userSocket != null) {
+          userSocket.close();
+        }
+        if (in != null) {
+          in.close();
+        }
+        if (out != null) {
+          out.close();
+        }
       } catch (IOException exception) {
         exception.printStackTrace();
         throw new RuntimeException(exception.getMessage());
